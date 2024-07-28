@@ -12,6 +12,7 @@
   "description": "This project is for the paintings collections and display website",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "mocha"
   },
   "repository": {
