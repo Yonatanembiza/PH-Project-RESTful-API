@@ -6,5 +6,30 @@
   },
   "devDependencies": {
     "mocha": "^10.7.0"
-  }
+  },
+  "name": "php-api",
+  "version": "1.0.0",
+  "description": "This project is for the paintings collections and display website",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yonatanembiza/PH-Project-RESTful-API.git"
+  },
+  "keywords": [
+    "Express",
+    "MongoDB",
+    "NodeJS",
+    "MOCHA",
+    "RESTful",
+    "MVC"
+  ],
+  "author": "Yonatan Tadesse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yonatanembiza/PH-Project-RESTful-API/issues"
+  },
+  "homepage": "https://github.com/Yonatanembiza/PH-Project-RESTful-API#readme"
 }
