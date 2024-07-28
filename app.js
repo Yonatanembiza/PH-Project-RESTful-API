@@ -1,4 +1,6 @@
 require("dotenv").config();
+require("./database-connection/dbconnection").open(); // open db conncetion once at the start of the app
+const routes= require("./controllers/routes")
 const path= require("path");
 const express= require("express");
 
@@ -14,7 +16,10 @@ app.use(function(req, res, next){
 });
 // for static pages
 app.use(express.static(path.join(__dirname, process.env.STATIC_FOLDER)));
+// routes to resources
+app.use("/api", routes);
 
+// running server
 const server= app.listen(process.env.PORT, function(){
     console.log(process.env.SERVER_START_MESSAGE, server.address().port);
 });
