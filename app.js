@@ -1,6 +1,6 @@
 require("dotenv").config();
-require("./database-connection/dbconnection").open(); // open db conncetion once at the start of the app
-const routes= require("./controllers/routes")
+require("./api/data/db");
+const routes= require("./rouets/index");
 const path= require("path");
 const express= require("express");
 
