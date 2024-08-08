@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("./api/data/db");
+const cors= require("cors");
 const routes= require("./rouets/index");
 const path= require("path");
 const express= require("express");
@@ -9,6 +10,7 @@ const app= express();
 // middlewares
 // to parse json data
 app.use(express.json()); 
+app.use(cors());
 // logging
 app.use(function(req, res, next){
     console.log(req.method, req.url);

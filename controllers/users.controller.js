@@ -49,6 +49,22 @@ const getUserByName= function(req, res) {
             return res.status(200).json(doc);
         });
 };
+// update user
+const updateUserByUsername= function(req, res) {
+    const username= req.params.username;
+    User
+        .updateOne({username: username}, req.body)
+        .exec(function(error, doc) {
+            if (error) {
+                return res.status(500).json({ error: error.message || "Internal server error" });
+            }
+            if (!doc) {
+                return res.status(404).json({ error: "User not found" });
+            }
+            return res.status(200).json(doc);
+        });
+};
+// delete user
 const deleteUserByName= function(req, res) {
     const username= req.params.username;
     User
@@ -65,26 +81,29 @@ const deleteUserByName= function(req, res) {
 };
 // user login
 const login= function(req, res) {
+    console.log("here", req.body);
     const username= req.body.username;
     const password= req.body.password;
     User
-        .findOne({username: username}).exec(function(error, doc) {
+        .findOne({username: username}).exec(function(error, user) {
             if (error) {
                 return res.status(500).json({ error: error.message || "Internal server error" });
             }   
-            if (!doc) {
+            if (!user) {
                 return res.status(404).json({ error: "User not found" });
             }   
-            if (doc.password !== password) {
+            if (user.password !== password) {
                 return res.status(401).json({ error: "Invalid credentials" });
             }
-            return res.status(200).json(doc);
+            console.log("User logged in successfully");
+            return res.status(200).json(user);
         });
 };
 module.exports= {
     addUser: addUser,
     getUsers: getUsers,
     getUserByName: getUserByName,
+    updateUserByUsername: updateUserByUsername,
     deleteUserByName: deleteUserByName,
     login: login
 };

@@ -18,6 +18,8 @@ export class LoginComponent {
   }
   constructor(private userService: UserService) { }
   onSubmit() {
+    if(this.loginCredentials.username == '' || this.loginCredentials.password == '') 
+      return alert('Please enter username and password');
     this.userService.login(this.loginCredentials).subscribe((data: any) => {
       console.log(data);
     })
