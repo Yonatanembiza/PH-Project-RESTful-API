@@ -1,0 +1,46 @@
+<p>Add Painting</p>
+
+<form (ngSubmit)="onSubmit()">
+    <div>
+        <label>
+            Name:
+            <input name="name" [(ngModel)]="painting.name" placeholder="name">
+        </label>
+    </div>
+    <div>
+        <label>
+            Artist:
+            <input name="artist" [(ngModel)]="painting.artist" placeholder="artist">
+        </label>
+    </div>
+    <div>
+        <label>
+            Year:
+            <input name="year" [(ngModel)]="painting.year" placeholder="year">
+        </label>
+    </div>
+    <div>
+        <label>
+            Image Link:
+            <input name="image" [(ngModel)]="painting.image" placeholder="image">
+        </label>
+    </div>
+    <div>
+        <label>
+            Current Location:
+            <input name="current_location_name" [(ngModel)]="painting.current_location_name" placeholder="location_name"><br>
+            <input countryName="current_location_country" [(ngModel)]="painting.current_location_country" placeholder="location_country">
+        </label>
+    </div>
+    <div>
+        <label>
+            First Displayed:
+            <input name="first_displayed" [(ngModel)]="painting.first_displayed" placeholder="first_displayed"><br>
+            <input countryName="first_displayed_country" [(ngModel)]="painting.first_displayed_country" placeholder="first_displayed_country">
+        </label>
+    </div>
+    <div>
+        <button type="submit">Register</button>
+    </div>
+</form>
+

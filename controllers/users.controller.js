@@ -63,9 +63,28 @@ const deleteUserByName= function(req, res) {
             return res.status(200).json(doc);
         });
 };
+// user login
+const login= function(req, res) {
+    const username= req.body.username;
+    const password= req.body.password;
+    User
+        .findOne({username: username}).exec(function(error, doc) {
+            if (error) {
+                return res.status(500).json({ error: error.message || "Internal server error" });
+            }   
+            if (!doc) {
+                return res.status(404).json({ error: "User not found" });
+            }   
+            if (doc.password !== password) {
+                return res.status(401).json({ error: "Invalid credentials" });
+            }
+            return res.status(200).json(doc);
+        });
+};
 module.exports= {
-    addUser,
-    getUsers,
-    getUserByName,
-    deleteUserByName
+    addUser: addUser,
+    getUsers: getUsers,
+    getUserByName: getUserByName,
+    deleteUserByName: deleteUserByName,
+    login: login
 };

@@ -1,0 +1,42 @@
+<p>user-registration works!</p>
+<form (ngSubmit)="onSubmit()">
+    <div>
+        <label>
+            FirstName:
+            <input name="firstName" [(ngModel)]="user.firstName" placeholder="firstName">
+        </label>
+    </div>
+    <div>
+        <label>
+            LastName:
+            <input name="lastName" [(ngModel)]="user.lastName" placeholder="lastName">
+        </label>
+    </div>
+    <div>
+        <label>
+            Username:
+            <input name="username" [(ngModel)]="user.username" placeholder="username">
+        </label>
+    </div>
+    <div>
+        <label>
+            Email:
+            <input name="email" [(ngModel)]="user.email" placeholder="email">
+        </label>
+    </div>
+    <div>
+        <label>
+            Password:
+            <input name="password" [(ngModel)]="user.password" placeholder="password">
+        </label>
+    </div>
+    <div>
+        <label>
+            Repeat Password:
+            <input name="repeatPassword" [(ngModel)]="user.repeatPassword" placeholder="repeatPassword">
+        </label>
+    </div>
+    <div>
+        <button type="submit">Register</button>
+    </div>
+</form>

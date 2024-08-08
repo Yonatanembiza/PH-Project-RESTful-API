@@ -39,5 +39,8 @@ router.route('/users')
 router.route('/users/:username')
       .get(userController.getUserByName)
       .delete(userController.deleteUserByName);
+// user login
+router.route('/login')
+      .post(userController.login);
 
 module.exports= router;

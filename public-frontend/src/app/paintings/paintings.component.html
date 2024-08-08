@@ -1,0 +1,9 @@
+<h2>Available Paintings</h2>
+<ul>
+    <li *ngFor="let painting of paintings">
+        <a [routerLink]="['/paintings', painting._id]">{{painting.name}}</a> by {{painting.artist}} [{{painting.year}}]>
+    </li>
+</ul>
+<!-- previous and next buttons -->
+<button routerLink="/previous">Previous</button>
+<button routerLink="/next">Next</button>
