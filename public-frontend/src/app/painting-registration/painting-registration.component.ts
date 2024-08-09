@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
+import { PaintingService } from '../painting.service';
+import { Painting } from '../paintings/paintings.component';
 
 @Component({
   selector: 'app-painting-registration',
@@ -11,24 +13,39 @@ import { UserService } from '../user.service';
   styleUrl: './painting-registration.component.css'
 })
 export class PaintingRegistrationComponent {
-  painting= {
+  painting = {
     name: '',
     artist: '',
-    year: '',
+    year: 0,
     image: '',
     museum: {
       first_displayed: {
-        first_displayed: '',
-        first_displayed_country: ''
+        name: '',
+        country: ''
       },
       current_location: {
-        current_location_name: '',
-        current_location_country: ''
+        name: '',
+        country: ''
       }
     }
   }
-  onSubmit() {
-    console.log(this.painting);
-  }
-  
+
+    constructor(private paintingService: PaintingService) {}
+    // do API hardening here
+    onSubmit() {
+      if(this.painting.name == '' || this.painting.artist == '' || 
+        this.painting.year == 0 || this.painting.image == '' || 
+        this.painting.museum.first_displayed.name == '' || 
+        this.painting.museum.current_location.name == '')
+        return alert('Please enter all fields');
+      
+      this.paintingService.addPainting(this.painting).subscribe((data: Painting) => {
+        console.log(data, "was added successfully");
+        // notify user of success then redirect to /home
+        alert('Painting added successfully');
+        //  redirect to About page
+        window.location.reload();
+
+      });
+    }  
 }

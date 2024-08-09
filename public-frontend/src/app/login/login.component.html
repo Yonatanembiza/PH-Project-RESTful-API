@@ -1,19 +1,17 @@
-<p>login!</p>
-<!-- login form here -->
- <form (ngSubmit)="onSubmit()">
-    <div>
-        <label>
-            Username:
-            <input name="username" [(ngModel)]="loginCredentials.username" placeholder="username">
-        </label>
-    </div>
-    <div>
-        <label>
-            Password:
-            <input name="password" [(ngModel)]="loginCredentials.password" placeholder="password">
-        </label>
-    </div>
-    <div>
+<div class="login-container">
+    <h2>Login Here</h2>
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input id="username" name="username" [(ngModel)]="loginCredentials.username" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input id="password" name="password" [(ngModel)]="loginCredentials.password" type="password" placeholder="Password">
+      </div>
+      <div class="form-group">
         <button type="submit">Login</button>
-    </div>
- </form>
+      </div>
+    </form>
+  </div>
+  

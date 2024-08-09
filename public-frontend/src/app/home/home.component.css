@@ -1,0 +1,40 @@
+/* Welcome Section */
+.welcome-section {
+    text-align: center; /* Center-align all text */
+    padding: 20px; /* Add padding around the section */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 20px auto; /* Center the section horizontally */
+    max-width: 800px; /* Maximum width for readability */
+  }
+  
+  h1 {
+    font-family: 'Arial', sans-serif; /* Clean and modern font */
+    color: #333; /* Dark text color */
+    margin-bottom: 20px; /* Spacing below the heading */
+  }
+  
+  .intro-text {
+    font-size: 1.2em; /* Slightly larger font size */
+    color: #555; /* Slightly lighter text color */
+    margin-bottom: 15px; /* Spacing below the paragraph */
+  }
+  
+  .details-text {
+    font-size: 1em; /* Standard font size */
+    color: #666; /* Even lighter text color */
+    margin-bottom: 20px; /* Spacing below the paragraph */
+  }
+  
+  .image-container {
+    margin: 0 auto; /* Center the image horizontally */
+    max-width: 80%; /* Limit the image width */
+  }
+  
+  img {
+    max-width: 100%; /* Ensure the image scales with container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners for the image */
+  }
+  

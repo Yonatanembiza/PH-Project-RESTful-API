@@ -1,0 +1,32 @@
+/* Navigation Container */
+.nav-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center buttons horizontally */
+    gap: 10px; /* Space between buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap to new lines if needed */
+    padding: 20px; /* Padding around the container */
+    background-color: #fff; /* Background color for the nav container */
+    border-radius: 8px; /* Rounded corners for the container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  }
+  
+  /* Navigation Button */
+  .nav-button {
+    background-color: #007bff; /* Primary button color */
+    color: #fff; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding inside the button */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+  }
+  
+  .nav-button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+  }
+  
+  .nav-button:focus {
+    outline: none; /* Remove default focus outline */
+  }
+  

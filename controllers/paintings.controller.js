@@ -7,8 +7,9 @@ const Painting= mongoose.model(process.env.PAINTING_MODEL);
 const addPainting= function(req, res) {
     const paintingName= req.body.name;
 
-    
     Painting.findOne({name: paintingName}).exec(function(error, doc) {
+        console.log("doc: ", doc);
+        console.log("name: ", paintingName);
         if (error) {
             return res.status(500).json({ error: error.message || "Internal server error" });
         }
@@ -18,6 +19,7 @@ const addPainting= function(req, res) {
         // insert new painting
         Painting.create(req.body, function(error, doc) {
             if (error) {
+                console.log(error);
                 return res.status(500).json({ error: error.message || "Internal server error" });
             }
             console.log("Painting created successfully");

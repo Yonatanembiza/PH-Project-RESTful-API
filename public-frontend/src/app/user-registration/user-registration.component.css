@@ -1,0 +1,58 @@
+/* User Registration Form Styles */
+.user-registration-form {
+    max-width: 500px; /* Limit width for better readability */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 20px; /* Padding around the form */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.user-registration-form h2 {
+    text-align: center; /* Center-align the header */
+    color: #333; /* Dark text color */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+}
+
+.form-group label {
+    display: block; /* Block display for labels */
+    margin-bottom: 5px; /* Space below the label */
+    color: #555; /* Medium text color */
+}
+
+.form-group input {
+    width: 100%; /* Full width input */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners for input */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+.form-group input[type="email"] {
+    /* Specific styling for email input if needed */
+}
+
+.form-group input[type="password"] {
+    /* Specific styling for password input if needed */
+}
+
+.form-group button {
+    display: block; /* Block display for the button */
+    width: 100%; /* Full width button */
+    padding: 10px; /* Padding inside the button */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.form-group button:hover {
+    background-color: #0056b3; /* Darker button color on hover */
+}

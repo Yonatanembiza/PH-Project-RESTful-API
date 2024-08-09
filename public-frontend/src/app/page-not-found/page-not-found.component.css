@@ -1,0 +1,31 @@
+/* Container for 404 Page Not Found */
+.not-found-container {
+    text-align: center; /* Center-align all text */
+    padding: 40px; /* Add padding around the container */
+    background-color: #f8f9fa; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    margin: 20px auto; /* Center the container horizontally */
+    max-width: 800px; /* Maximum width for readability */
+  }
+  
+  /* 404 Message */
+  .not-found-message {
+    font-size: 1.5em; /* Larger font size for emphasis */
+    color: #343a40; /* Darker text color */
+    margin-bottom: 20px; /* Space below the message */
+  }
+  
+  /* Image Container */
+  .image-container {
+    margin: 0 auto; /* Center the image horizontally */
+    max-width: 70%; /* Limit the image width */
+  }
+  
+  /* Image */
+  .image-container img {
+    max-width: 100%; /* Ensure the image scales with container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners for the image */
+  }
+  

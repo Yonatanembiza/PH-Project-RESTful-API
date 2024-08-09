@@ -1,46 +1,58 @@
-<p>Add Painting</p>
-
-<form (ngSubmit)="onSubmit()">
-    <div>
-        <label>
-            Name:
-            <input name="name" [(ngModel)]="painting.name" placeholder="name">
-        </label>
-    </div>
-    <div>
-        <label>
-            Artist:
-            <input name="artist" [(ngModel)]="painting.artist" placeholder="artist">
-        </label>
-    </div>
-    <div>
-        <label>
-            Year:
-            <input name="year" [(ngModel)]="painting.year" placeholder="year">
-        </label>
-    </div>
-    <div>
-        <label>
-            Image Link:
-            <input name="image" [(ngModel)]="painting.image" placeholder="image">
-        </label>
-    </div>
-    <div>
-        <label>
-            Current Location:
-            <input name="museum.current_location_name" [(ngModel)]="painting.museum.current_location.current_location_name" placeholder="museum.current_location_name"><br>
-            <input countryName="current_location_country" [(ngModel)]="painting.museum.current_location.current_location_country" placeholder="location_country">
-        </label>
-    </div>
-    <div>
-        <label>
-            First Displayed:
-            <input name="first_displayed" [(ngModel)]="painting.museum.first_displayed.first_displayed" placeholder="first_displayed"><br>
-            <input countryName="first_displayed_country" [(ngModel)]="painting.museum.first_displayed.first_displayed_country" placeholder="first_displayed_country">
-        </label>
-    </div>
-    <div>
-        <button type="submit">Register</button>
-    </div>
-</form>
-
+<!-- Add Painting Form -->
+<section class="add-painting-form">
+    <h2>Add Painting</h2>
+  
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" name="name" [(ngModel)]="painting.name" placeholder="Enter painting name" required>
+        </div>
+  
+        <div class="form-group">
+            <label for="artist">Artist:</label>
+            <input id="artist" name="artist" [(ngModel)]="painting.artist" placeholder="Enter artist's name" required>
+        </div>
+  
+        <div class="form-group">
+            <label for="year">Year:</label>
+            <input id="year" name="year" [(ngModel)]="painting.year" placeholder="Enter year of painting" type="number" required>
+        </div>
+  
+        <div class="form-group">
+            <label for="image">Image Link:</label>
+            <input id="image" name="image" [(ngModel)]="painting.image" placeholder="Enter image URL" required>
+        </div>
+  
+        <fieldset class="form-group">
+            <legend>Current Location</legend>
+            <div class="row">
+                <div class="col">
+                    <label for="name">Name:</label>
+                    <input id="name" name="name" [(ngModel)]="painting.museum.current_location.name" placeholder="Location name" required>
+                </div>
+                <div class="col">
+                    <label for="country">Country:</label>
+                    <input id="country" name="country" [(ngModel)]="painting.museum.current_location.country" placeholder="Country" required>
+                </div>
+            </div>
+        </fieldset>
+  
+        <fieldset class="form-group">
+            <legend>First Displayed</legend>
+            <div class="row">
+                <div class="col">
+                    <label for="name">Name:</label>
+                    <input id="name" name="first_displayed" [(ngModel)]="painting.museum.first_displayed.name" placeholder="Location name" required>
+                </div>
+                <div class="col">
+                    <label for="country">Country:</label>
+                    <input id="country" name="country" [(ngModel)]="painting.museum.first_displayed.country" placeholder="Country" required>
+                </div>
+            </div>
+        </fieldset>
+  
+        <div class="form-group">
+            <button type="submit">Register</button>
+        </div>
+    </form>
+</section>

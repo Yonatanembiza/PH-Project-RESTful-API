@@ -1,6 +1,17 @@
-<!--  Details of the painting -->
-<h2>{{painting.name}} by {{painting.artist}} [{{painting.year}}]</h2>
-<img src="{{painting.image}}" alt="painting image">
-<p>{{painting.current_location}}</p>
-<p>{{painting.first_displayed}}</p>
-
+<!-- Painting Details Section -->
+<section class="painting-details">
+    <p class="details-header">Details of the Painting</p>
+    <h2 class="painting-title">{{ painting.name }} by {{ painting.artist }} [{{ painting.year }}]</h2>
+    
+    <div class="location-info">
+        <strong>Current Location:</strong> {{ painting.museum?.current_location?.name }} - {{ painting.museum?.current_location?.country }}
+    </div>
+    <div class="first-displayed-info">
+        <strong>First Displayed:</strong> {{ painting.museum?.first_displayed?.name }} - {{ painting.museum?.first_displayed?.country }}
+    </div>
+    
+    <img src="{{ painting.image }}" class="painting-image" alt="Painting Image"><br>
+    
+    <!-- Delete Button -->
+    <button class="delete-button" (click)="deletePainting()">Delete</button>
+</section>

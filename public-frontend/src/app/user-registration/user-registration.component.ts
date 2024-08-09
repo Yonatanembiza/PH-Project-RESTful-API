@@ -30,6 +30,9 @@ export class UserRegistrationComponent {
         return alert('Please enter all fields');
       if(this.user.password != this.user.repeatPassword)
         return alert('Passwords do not match');
+      let user: any = this.userService.getUserByUsername(this.user.username);
+      if(user != null)
+        return alert('Username already taken, please choose a different one');
       this.userService.registerUser(this.user).subscribe((data: any) => {
         alert('Registration successful');
         // clear form

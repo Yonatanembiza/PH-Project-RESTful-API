@@ -1,0 +1,51 @@
+
+.painting-details {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    
+    .details-header {
+        font-size: 1.2em;
+        color: #333;
+        margin-bottom: 15px;
+    }
+    
+    .painting-title {
+        font-size: 1.5em;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+    
+    .location-info, .first-displayed-info {
+        font-size: 1em;
+        color: #555;
+        margin-bottom: 8px;
+    }
+    
+    .painting-image {
+        max-width: 100%;
+        height: auto;
+        margin: 20px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .delete-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .delete-button:hover {
+        background-color: #c82333;
+    }

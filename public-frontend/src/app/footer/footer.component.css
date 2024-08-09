@@ -1,0 +1,29 @@
+/* Footer Styles */
+.footer {
+    background-color: #f8f9fa; /* Light background color for the footer */
+    padding: 20px; /* Padding around the footer */
+    text-align: center; /* Center align text */
+    border-top: 1px solid #ddd; /* Light border on top */
+}
+
+.footer-content {
+    max-width: 1200px; /* Max width for the content */
+    margin: 0 auto; /* Center the content horizontally */
+}
+
+.footer-logo img {
+    max-width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.footer-text {
+    color: #6c757d; /* Muted text color */
+    margin-top: 10px; /* Space above the text */
+    font-size: 14px; /* Font size for the text */
+}
+
+@media (max-width: 768px) {
+    .footer-logo img {
+        height: 50px; /* Adjust image height for smaller screens */
+    }
+}

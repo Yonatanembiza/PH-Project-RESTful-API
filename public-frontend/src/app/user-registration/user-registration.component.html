@@ -1,42 +1,40 @@
-<p>user-registration works!</p>
-<form (ngSubmit)="onSubmit()">
-    <div>
-        <label>
-            FirstName:
-            <input name="firstName" [(ngModel)]="user.firstName" placeholder="firstName">
-        </label>
-    </div>
-    <div>
-        <label>
-            LastName:
-            <input name="lastName" [(ngModel)]="user.lastName" placeholder="lastName">
-        </label>
-    </div>
-    <div>
-        <label>
-            Username:
-            <input name="username" [(ngModel)]="user.username" placeholder="username">
-        </label>
-    </div>
-    <div>
-        <label>
-            Email:
-            <input name="email" [(ngModel)]="user.email" placeholder="email">
-        </label>
-    </div>
-    <div>
-        <label>
-            Password:
-            <input name="password" [(ngModel)]="user.password" placeholder="password">
-        </label>
-    </div>
-    <div>
-        <label>
-            Repeat Password:
-            <input name="repeatPassword" [(ngModel)]="user.repeatPassword" placeholder="repeatPassword">
-        </label>
-    </div>
-    <div>
-        <button type="submit">Register</button>
-    </div>
-</form>
+<!-- User Registration Form -->
+<section class="user-registration-form">
+    <h2>Register</h2>
+  
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input id="firstName" name="firstName" [(ngModel)]="user.firstName" placeholder="Enter first name" required>
+        </div>
+  
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input id="lastName" name="lastName" [(ngModel)]="user.lastName" placeholder="Enter last name" required>
+        </div>
+  
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input id="username" name="username" [(ngModel)]="user.username" placeholder="Enter username" required>
+        </div>
+  
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" name="email" [(ngModel)]="user.email" type="email" placeholder="Enter email" required>
+        </div>
+  
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" name="password" [(ngModel)]="user.password" type="password" placeholder="Enter password" required>
+        </div>
+  
+        <div class="form-group">
+            <label for="repeatPassword">Repeat Password:</label>
+            <input id="repeatPassword" name="repeatPassword" [(ngModel)]="user.repeatPassword" type="password" placeholder="Repeat password" required>
+        </div>
+  
+        <div class="form-group">
+            <button type="submit">Register</button>
+        </div>
+    </form>
+</section>

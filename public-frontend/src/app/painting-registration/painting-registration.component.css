@@ -1,0 +1,78 @@
+/* Add Painting Form Section */
+.add-painting-form {
+    max-width: 600px; /* Adjusted width for better fit */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 20px; /* Padding around the form */
+    background-color: #fff; /* White background color for clarity */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Slight shadow */
+}
+
+/* Form Header */
+.add-painting-form h2 {
+    text-align: center; /* Center-align the header */
+    color: #333; /* Dark text color */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+}
+
+.form-group label {
+    display: block; /* Block display for labels */
+    margin-bottom: 5px; /* Space below the label */
+    color: #555; /* Medium text color */
+    font-weight: bold; /* Bold labels for better readability */
+}
+
+.form-group input {
+    width: 100%; /* Full width input */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners for input */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+/* Fieldset for grouping related fields */
+fieldset {
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding inside the fieldset */
+    margin-bottom: 15px; /* Space below the fieldset */
+    background-color: #f9f9f9; /* Slightly different background color */
+}
+
+legend {
+    font-weight: bold; /* Bold legend text */
+    color: #333; /* Dark text color */
+}
+
+/* Row and Column layout for fieldset */
+.row {
+    display: flex; /* Flexbox for row layout */
+    gap: 10px; /* Space between columns */
+}
+
+.col {
+    flex: 1; /* Flex grow for equal-width columns */
+}
+
+/* Button Styling */
+.form-group button {
+    display: block; /* Block display for the button */
+    width: 100%; /* Full width button */
+    padding: 10px; /* Padding inside the button */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.form-group button:hover {
+    background-color: #0056b3; /* Darker button color on hover */
+}
