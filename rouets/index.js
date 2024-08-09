@@ -4,6 +4,8 @@ const router= express.Router();
 const paintingController= require("../controllers/paintings.controller");
 const userController= require("../controllers/users.controller");
 
+const verifyToken= require("../api/security/security.config");
+
 // routes for paintings
 router.route('/paintings')
       .post(paintingController.addPainting)
@@ -12,7 +14,7 @@ router.route('/paintings/:id/museum')
       .post(paintingController.addMuseumByPaintingId);
 router.route('/paintings/:id')
       .get(paintingController.getPaintingById)
-      .delete(paintingController.deletePaintingById)
+      .delete( paintingController.deletePaintingById)
       .put(paintingController.updatePaintingById);
 router.route('/paintings/:name')
       .get(paintingController.getPaintingByName)
@@ -40,8 +42,6 @@ router.route('/users/:username')
       .get(userController.getUserByName)
       .delete(userController.deleteUserByName)
       .put(userController.updateUserByUsername);
-
-// user login
 router.route('/users/login')
       .post(userController.login);
 

@@ -90,7 +90,7 @@ const getPaintingByName = function(req, res) {
         if (!doc) {
             return res.status(404).json({ error: "Painting not found" });
         }
-        res.status(200).json(doc);
+        return res.status(200).json(doc);
     });
 };
 
