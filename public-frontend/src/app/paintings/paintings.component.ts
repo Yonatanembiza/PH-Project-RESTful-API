@@ -48,6 +48,39 @@ export class PaintingsComponent {
   }
 }
 
+// export class Painting {
+//   constructor(
+//     public _id: string,
+//     public name: string,
+//     public artist: string,
+//     public year: number,
+//     public image?: string,
+//     public museum?: {
+//       first_displayed: {
+//         name: string;
+//         country: string;
+//       };
+//       current_location: {
+//         name: string;
+//         country: string;
+//       };
+//     }
+//   ) {}
+// }
+export class Location {
+  constructor(
+    public name: string,
+    public country: string
+  ) {}
+}
+
+export class Museum {
+  constructor(
+    public first_displayed: Location,
+    public current_location: Location
+  ) {}
+}
+
 export class Painting {
   constructor(
     public _id: string,
@@ -55,15 +88,6 @@ export class Painting {
     public artist: string,
     public year: number,
     public image?: string,
-    public museum?: {
-      first_displayed: {
-        name: string;
-        country: string;
-      };
-      current_location: {
-        name: string;
-        country: string;
-      };
-    }
+    public museum?: Museum
   ) {}
 }

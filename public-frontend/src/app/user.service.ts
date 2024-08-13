@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private baseUrl = 'http://localhost:3000/api/users';
+  private baseUrl = environment.apiUrl + '/users';
 
   constructor(private http: HttpClient, private activeRoute: ActivatedRoute) { }
   registerUser(user: any) {

@@ -1,48 +1,59 @@
 require("dotenv").config();
-const express= require("express");
-const router= express.Router();
-const paintingController= require("../controllers/paintings.controller");
-const userController= require("../controllers/users.controller");
+const express = require("express");
+const router = express.Router();
+const paintingController = require("../controllers/paintings.controller");
+const userController = require("../controllers/users.controller");
 
-const verifyToken= require("../api/security/security.config");
+const verifyToken = require("../api/security/verifyToken");
 
-// routes for paintings
+// Routes for paintings
 router.route('/paintings')
-      .post(paintingController.addPainting)
-      .get(paintingController.getPaintings);
-router.route('/paintings/:id/museum')
-      .post(paintingController.addMuseumByPaintingId);
-router.route('/paintings/:id')
-      .get(paintingController.getPaintingById)
-      .delete( paintingController.deletePaintingById)
-      .put(paintingController.updatePaintingById);
-router.route('/paintings/:name')
-      .get(paintingController.getPaintingByName)
-      .delete(paintingController.deletePaintingByName)
-      .put(paintingController.updatePaintingByName);
-router.route('/paintings/:id/museum/current')
-      .get(paintingController.getCurrentMuseumByPaintingId);
-router.route('/paintings/:name/museum/current')
-      .get(paintingController.getCurrentMuseumByPaintingName);
-router.route('/paintings/:id/museum/former')
-      .get(paintingController.getFormerMuseumByPaintingId);
-router.route('/paintings/:name/museum/former')
-      .get(paintingController.getFormerMuseumByPaintingName);
-router.route('/paintings/:id/museum')
-      .put(paintingController.updateMuseumByPaintingId)
-      .delete(paintingController.deleteMuseumByPaintingId);
-router.route('/paintings/:name/museum')
-      .delete(paintingController.deleteMuseumByPaintingName);
+    .post(verifyToken, paintingController.addPainting)
+    .get(paintingController.getPaintings);
 
-// routes for users
+router.route('/paintings/id/:id/museum')
+    .post(verifyToken, paintingController.addMuseumByPaintingId);
+
+router.route('/paintings/id/:id')
+    .get(paintingController.getPaintingById)
+    .delete(verifyToken, paintingController.deletePaintingById)
+    .put(verifyToken, paintingController.updatePaintingById);
+
+router.route('/paintings/name/:name')
+    .get(paintingController.getPaintingByName)
+    .delete(verifyToken, paintingController.deletePaintingByName)
+    .put(verifyToken, paintingController.updatePaintingByName);
+
+router.route('/paintings/id/:id/museum/current')
+    .get(paintingController.getCurrentMuseumByPaintingId);
+
+router.route('/paintings/name/:name/museum/current')
+    .get(paintingController.getCurrentMuseumByPaintingName);
+
+router.route('/paintings/id/:id/museum/former')
+    .get(paintingController.getFormerMuseumByPaintingId);
+
+router.route('/paintings/name/:name/museum/former')
+    .get(paintingController.getFormerMuseumByPaintingName);
+
+router.route('/paintings/id/:id/museum')
+    .put(verifyToken, paintingController.updateMuseumByPaintingId)
+    .delete(verifyToken, paintingController.deleteMuseumByPaintingId);
+
+router.route('/paintings/name/:name/museum')
+    .delete(verifyToken, paintingController.deleteMuseumByPaintingName);
+
+// Routes for users
 router.route('/users')
-      .post(userController.addUser)
-      .get(userController.getUsers);
-router.route('/users/:username')
-      .get(userController.getUserByName)
-      .delete(userController.deleteUserByName)
-      .put(userController.updateUserByUsername);
-router.route('/users/login')
-      .post(userController.login);
+    .post(userController.addUser)
+    .get(verifyToken, userController.getUsers);
 
-module.exports= router;
+router.route('/users/username/:username')
+    .get(verifyToken, userController.getUserByName)
+    .delete(verifyToken, userController.deleteUserByName)
+    .put(verifyToken, userController.updateUserByUsername);
+
+router.route('/users/login')
+    .post(userController.login);
+
+module.exports = router;

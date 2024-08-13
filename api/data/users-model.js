@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose= require("mongoose");
 
 const userSchema= new mongoose.Schema({
@@ -23,4 +24,4 @@ const userSchema= new mongoose.Schema({
     }
 });
 
-mongoose.model("User", userSchema, "users");
+mongoose.model(process.env.USER_MODEL, userSchema, process.env.USER_COLLECTION);

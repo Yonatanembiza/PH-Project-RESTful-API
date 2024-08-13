@@ -2,35 +2,33 @@ require("dotenv").config();
 const express = require("express");
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
-const Painting= mongoose.model(process.env.PAINTING_MODEL);
+const Painting = mongoose.model(process.env.PAINTING_MODEL);
 
-const addPainting= function(req, res) {
-    const paintingName= req.body.name;
+// Add a painting
+const addPainting = function (req, res) {
+    const paintingName = req.body.name;
 
-    Painting.findOne({name: paintingName}).exec(function(error, doc) {
-        console.log("doc: ", doc);
-        console.log("name: ", paintingName);
+    Painting.findOne({ name: paintingName }).exec(function (error, doc) {
         if (error) {
             return res.status(500).json({ error: error.message || "Internal server error" });
         }
         if (doc) {
             return res.status(409).json({ error: "Painting already exists" });
         }
-        // insert new painting
-        Painting.create(req.body, function(error, doc) {
+        Painting.create(req.body, function (error, doc) {
             if (error) {
-                console.log(error);
                 return res.status(500).json({ error: error.message || "Internal server error" });
             }
-            console.log("Painting created successfully");
-            return res.status(201).json(doc);
+            res.status(201).json(doc);
         });
     });
 };
 
-const addMuseumByPaintingId= function(req, res) {
-    const paintingId= req.params.id;
-    Painting.findById(paintingId).exec(function(error, doc) {
+// Add museum information to a painting by ID
+const addMuseumByPaintingId = function (req, res) {
+    const paintingId = req.params.id;
+
+    Painting.findById(paintingId).exec(function (error, doc) {
         if (error) {
             return res.status(500).json({ error: error.message || "Internal server error" });
         }
@@ -38,27 +36,27 @@ const addMuseumByPaintingId= function(req, res) {
             return res.status(404).json({ error: "Painting not found" });
         }
         Painting.updateOne(
-            { _id: ObjectId(req.params.id) },
+            { _id: ObjectId(paintingId) },
             { $push: { museum: req.body } },
-            function(error, doc) {
+            function (error, result) {
                 if (error) {
                     return res.status(500).json({ error: error.message || "Internal server error" });
                 }
-                res.status(200).json(doc);
+                res.status(200).json(result);
             }
         );
-    })
-    
+    });
 };
 
-const getPaintings= function(req, res) {
-    let offset = parseInt(req.query.offset) || parseInt(process.env.OFFSET);
-    let count = parseInt(req.query.count) || parseInt(process.env.COUNT);
-    Painting
-        .find()
+// Get a list of paintings with pagination
+const getPaintings = function (req, res) {
+    const offset = parseInt(req.query.offset, 10) || parseInt(process.env.OFFSET, 10);
+    const count = parseInt(req.query.count, 10) || parseInt(process.env.COUNT, 10);
+
+    Painting.find()
         .skip(offset)
         .limit(count)
-        .exec(function(error, docs) {
+        .exec(function (error, docs) {
             if (error) {
                 return res.status(500).json({ error: error.message || "Internal server error" });
             }
@@ -66,12 +64,13 @@ const getPaintings= function(req, res) {
         });
 };
 
-const getPaintingById = function(req, res) {
-    const paintingId= req.params.id;
-    console.log("Get painting by id: " + paintingId);
-    Painting.findById(paintingId).exec(function(error, doc) {
+// Get a painting by ID
+const getPaintingById = function (req, res) {
+    const paintingId = req.params.id;
+
+    Painting.findById(paintingId).exec(function (error, doc) {
         if (error) {
-            return res.status(500).json({ error: error.message || "Internal error" });
+            return res.status(500).json({ error: error.message || "Internal server error" });
         }
         if (!doc) {
             return res.status(404).json({ error: "Painting not found" });
@@ -80,213 +79,211 @@ const getPaintingById = function(req, res) {
     });
 };
 
-// get painting by name
-const getPaintingByName = function(req, res) {
-    const paintingName= req.params.name;
-    Painting.findOne({name: paintingName}).exec(function(error, doc) {
+// Get a painting by name
+const getPaintingByName = function (req, res) {
+    const paintingName = req.params.name;
+
+    Painting.findOne({ name: paintingName }).exec(function (error, doc) {
         if (error) {
-            return res.status(500).json({ error: error.message || "Internal error" });
+            return res.status(500).json({ error: error.message || "Internal server error" });
         }
         if (!doc) {
             return res.status(404).json({ error: "Painting not found" });
         }
-        return res.status(200).json(doc);
+        res.status(200).json(doc);
     });
 };
 
-// get the current museum by painting id
-const getCurrentMuseumByPaintingId = function(req, res) {
-    const paintingId= req.params.id;
-    
-    Painting.findById(paintingId).exec(function(error, doc) {
+// Get the current museum location of a painting by ID
+const getCurrentMuseumByPaintingId = function (req, res) {
+    const paintingId = req.params.id;
+
+    Painting.findById(paintingId).exec(function (error, doc) {
         if (error) {
-            return res.status(500).json({ error: "Internal error" });
+            return res.status(500).json({ error: "Internal server error" });
         }
         if (!doc || !doc.museum || !doc.museum.current_location) {
-            return res.status(404).json({ error: "Not found" });
+            return res.status(404).json({ error: "Current museum location not found" });
         }
-        return res.status(200).json(doc.museum.current_location);
+        res.status(200).json(doc.museum.current_location);
     });
 };
 
-// get the former-museum by painting id
-const getFormerMuseumByPaintingId = function(req, res) {
-    const paintingId= req.params.id;
-    
-    Painting.findById(paintingId).exec(function(error, doc) {
+// Get the former museum location of a painting by ID
+const getFormerMuseumByPaintingId = function (req, res) {
+    const paintingId = req.params.id;
+
+    Painting.findById(paintingId).exec(function (error, doc) {
         if (error) {
-            return res.status(500).json({ error: "Internal error" });
+            return res.status(500).json({ error: "Internal server error" });
         }
         if (!doc || !doc.museum || !doc.museum.first_displayed) {
-            return res.status(404).json({ error: "Not found" });
+            return res.status(404).json({ error: "Former museum location not found" });
         }
-        return res.status(200).json(doc.museum.first_displayed);
+        res.status(200).json(doc.museum.first_displayed);
     });
 };
 
-// get the current museum by painting name
-const getCurrentMuseumByPaintingName = function(req, res) {
-    const paintingName= req.params.name;
-    
-    Painting.findOne({ name: paintingName }).exec(function(error, doc) {
+// Get the current museum location of a painting by name
+const getCurrentMuseumByPaintingName = function (req, res) {
+    const paintingName = req.params.name;
+
+    Painting.findOne({ name: paintingName }).exec(function (error, doc) {
         if (error) {
-            return res.status(500).json({ error: "Internal error" });
+            return res.status(500).json({ error: "Internal server error" });
         }
         if (!doc || !doc.museum || !doc.museum.current_location) {
-            return res.status(404).json({ error: "Not found" });
+            return res.status(404).json({ error: "Current museum location not found" });
         }
-        return res.status(200).json(doc.museum.current_location);
+        res.status(200).json(doc.museum.current_location);
     });
 };
 
-// get the former museum by painting name
-const getFormerMuseumByPaintingName = function(req, res) {
-    const paintingName= req.params.name;
-    Painting.findOne({ name: paintingName }).exec(function(error, doc) {
+// Get the former museum location of a painting by name
+const getFormerMuseumByPaintingName = function (req, res) {
+    const paintingName = req.params.name;
+
+    Painting.findOne({ name: paintingName }).exec(function (error, doc) {
         if (error) {
-            return res.status(500).json({ error: "Internal error" });
+            return res.status(500).json({ error: "Internal server error" });
         }
         if (!doc || !doc.museum || !doc.museum.first_displayed) {
-            return res.status(404).json({ error: "Not found" });
+            return res.status(404).json({ error: "Former museum location not found" });
         }
-        return res.status(200).json(doc.museum.first_displayed);
+        res.status(200).json(doc.museum.first_displayed);
     });
 };
 
-// Update --> Put
-// update painting by id
-const updatePaintingById = function(req, res) {
-    
+// Update painting by ID
+const updatePaintingById = function (req, res) {
     Painting.updateOne(
         { _id: ObjectId(req.params.id) },
         { $set: req.body },
-        function(error, doc) {
+        function (error, result) {
             if (error) {
-                return res.status(500).json({ error: "Internal error" });
+                return res.status(500).json({ error: "Internal server error" });
             }
-            if (!doc.matchedCount) {
+            if (!result.matchedCount) {
                 return res.status(404).json({ error: "Painting not found" });
             }
-            res.status(200).json(doc);
+            res.status(200).json(result);
         }
     );
 };
 
-// update painting by name
-const updatePaintingByName = function(req, res) {
-    
+// Update painting by name
+const updatePaintingByName = function (req, res) {
     Painting.updateOne(
         { name: req.params.name },
         { $set: req.body },
-        function(error, doc) {
+        function (error, result) {
             if (error) {
-                return res.status(500).json({ error: "Internal error" });
+                return res.status(500).json({ error: "Internal server error" });
             }
-            if (!doc.matchedCount) {
+            if (!result.matchedCount) {
                 return res.status(404).json({ error: "Painting not found" });
             }
-            res.status(200).json(doc);
+            res.status(200).json(result);
         }
     );
 };
 
-// update museum by painting id
-const updateMuseumByPaintingId = function(req, res) {
-    
+// Update current museum location by painting ID
+const updateMuseumByPaintingId = function (req, res) {
     Painting.updateOne(
         { _id: ObjectId(req.params.id) },
         { $set: { "museum.current_location": req.body } },
-        function(error, doc) {
+        function (error, result) {
             if (error) {
-                return res.status(500).json({ error: "Internal error" });
+                return res.status(500).json({ error: "Internal server error" });
             }
-            if (!doc.matchedCount) {
+            if (!result.matchedCount) {
                 return res.status(404).json({ error: "Painting not found" });
             }
-            res.status(200).json(doc);
+            res.status(200).json(result);
         }
     );
 };
 
-// Delete
-const deletePaintingById = function(req, res) {
-    const paintingId= req.params.id;
-    Painting.deleteOne({ _id: paintingId}).exec(function(error, doc) {
+// Delete painting by ID
+const deletePaintingById = function (req, res) {
+    const paintingId = req.params.id;
+
+    Painting.deleteOne({ _id: paintingId }).exec(function (error, result) {
         if (error) {
-            return res.status(500).json({ error: "Internal error" });
+            return res.status(500).json({ error: "Internal server error" });
         }
-        if (!doc.deletedCount) {
+        if (!result.deletedCount) {
             return res.status(404).json({ error: "Painting not found" });
         }
-        return res.status(200).json(doc);
+        res.status(200).json(result);
     });
 };
 
-const deletePaintingByName = function(req, res) {
-    const paintingName= req.params.name;
-    Painting.deleteOne({ name: paintingName }).exec(function(error, doc) {
+// Delete painting by name
+const deletePaintingByName = function (req, res) {
+    const paintingName = req.params.name;
+
+    Painting.deleteOne({ name: paintingName }).exec(function (error, result) {
         if (error) {
-            return res.status(500).json({ error: "Internal error" });
+            return res.status(500).json({ error: "Internal server error" });
         }
-        if (!doc.deletedCount) {
+        if (!result.deletedCount) {
             return res.status(404).json({ error: "Painting not found" });
         }
-        return res.status(200).json(doc);
+        res.status(200).json(result);
     });
 };
 
-const deleteMuseumByPaintingId = function(req, res) {
+// Delete museum information by painting ID
+const deleteMuseumByPaintingId = function (req, res) {
     Painting.updateOne(
         { _id: ObjectId(req.params.id) },
-        { $pop: { museum: req.body } },
-        function(error, doc) {
+        { $pull: { museum: req.body } },
+        function (error, result) {
             if (error) {
-                return res.status(500).json({ error: "Internal error" });
+                return res.status(500).json({ error: "Internal server error" });
             }
-            if (!doc.matchedCount) {
+            if (!result.matchedCount) {
                 return res.status(404).json({ error: "Painting not found" });
             }
-            res.status(200).json(doc);
+            res.status(200).json(result);
         }
     );
 };
 
-const deleteMuseumByPaintingName = function(req, res) {
-    
+// Delete museum information by painting name
+const deleteMuseumByPaintingName = function (req, res) {
     Painting.updateOne(
         { name: req.params.name },
-        { $pop: { museum: req.body } },
-        function(error, doc) {
+        { $pull: { museum: req.body } },
+        function (error, result) {
             if (error) {
-                return res.status(500).json({ error: "Internal error" });
+                return res.status(500).json({ error: "Internal server error" });
             }
-            if (!doc.matchedCount) {
+            if (!result.matchedCount) {
                 return res.status(404).json({ error: "Painting not found" });
             }
-            res.status(200).json(doc);
+            res.status(200).json(result);
         }
     );
 };
 
-// exporting the module
-module.exports= {
-    addPainting: addPainting,
-    addMuseumByPaintingId: addMuseumByPaintingId,
-
-    getPaintings: getPaintings,
-    getPaintingById: getPaintingById,
-    getPaintingByName: getPaintingByName,
-    getCurrentMuseumByPaintingId: getCurrentMuseumByPaintingId,
-    getCurrentMuseumByPaintingName: getCurrentMuseumByPaintingName,
-    getFormerMuseumByPaintingId: getFormerMuseumByPaintingId,
-    getFormerMuseumByPaintingName: getFormerMuseumByPaintingName,
-
-    updatePaintingById: updatePaintingById,
-    updatePaintingByName: updatePaintingByName,
-    updateMuseumByPaintingId: updateMuseumByPaintingId,
-
-    deletePaintingById: deletePaintingById,
-    deletePaintingByName: deletePaintingByName,
-    deleteMuseumByPaintingId: deleteMuseumByPaintingId,
-    deleteMuseumByPaintingName: deleteMuseumByPaintingName
-}
+module.exports = {
+    addPainting,
+    addMuseumByPaintingId,
+    getPaintings,
+    getPaintingById,
+    getPaintingByName,
+    getCurrentMuseumByPaintingId,
+    getFormerMuseumByPaintingId,
+    getCurrentMuseumByPaintingName,
+    getFormerMuseumByPaintingName,
+    updatePaintingById,
+    updatePaintingByName,
+    updateMuseumByPaintingId,
+    deletePaintingById,
+    deletePaintingByName,
+    deleteMuseumByPaintingId,
+    deleteMuseumByPaintingName
+};

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose= require("mongoose");
 
 const museumSchema= new mongoose.Schema({
@@ -44,4 +45,5 @@ const paintingSchema= new mongoose.Schema({
     }
 });
 
-mongoose.model("Painting", paintingSchema, "paintings");
+// mongoose.model("Painting", paintingSchema, "paintings");
+mongoose.model(process.env.PAINTING_MODEL, paintingSchema, process.env.PAINTING_COLLECTION);

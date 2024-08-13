@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 import { PaintingService } from '../painting.service';
 import { Painting } from '../paintings/paintings.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-painting-registration',
@@ -30,22 +31,34 @@ export class PaintingRegistrationComponent {
     }
   }
 
-    constructor(private paintingService: PaintingService) {}
+    constructor(private paintingService: PaintingService, private router: Router) {}
     // do API hardening here
     onSubmit() {
-      if(this.painting.name == '' || this.painting.artist == '' || 
-        this.painting.year == 0 || this.painting.image == '' || 
-        this.painting.museum.first_displayed.name == '' || 
-        this.painting.museum.current_location.name == '')
+      if (
+        this.painting.name.trim() === '' || 
+        this.painting.artist.trim() === '' || 
+        this.painting.year === 0 || 
+        this.painting.image.trim() === '' || 
+        this.painting.museum.first_displayed.name.trim() === '' || 
+        this.painting.museum.current_location.name.trim() === ''
+      ) {
         return alert('Please enter all fields');
-      
-      this.paintingService.addPainting(this.painting).subscribe((data: Painting) => {
-        console.log(data, "was added successfully");
-        // notify user of success then redirect to /home
-        alert('Painting added successfully');
-        //  redirect to About page
-        window.location.reload();
-
-      });
-    }  
+      }
+    
+      this.paintingService.addPainting(this.painting).subscribe(
+        (data: Painting) => {
+          console.log(`${data.name} was added successfully`);
+    
+          // Notify the user of success
+          alert('Painting added successfully');
+    
+          // Redirect to the /home page
+          this.router.navigate(['/home']);
+        },
+        (err) => {
+          console.error('Error adding painting:', err);
+          alert('An error occurred while adding the painting, please try again.');
+        }
+      );
+    }
 }
