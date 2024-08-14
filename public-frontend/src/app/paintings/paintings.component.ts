@@ -21,6 +21,9 @@ export class PaintingsComponent {
   constructor(private paintingService: PaintingService) { }
 
   ngOnInit() {
+    // retrieve savedPage from localStorage
+    const savedPage = localStorage.getItem('savedPage');
+    this.currentPage = savedPage ? parseInt(savedPage) : 1;
     this.paintingService.getPaintings().subscribe((data: Painting[]) => {
       this.paintings = data;
       this.updateDisplayedPaintings();
@@ -31,6 +34,9 @@ export class PaintingsComponent {
     const startIndex = (this.currentPage - 1) * this.paintingsPerPage;
     const endIndex = startIndex + this.paintingsPerPage;
     this.displayedPaintings = this.paintings.slice(startIndex, endIndex);
+
+    // save the current page to localStorage
+    localStorage.setItem('savedPage', this.currentPage.toString());
   }
 
   nextPage() {

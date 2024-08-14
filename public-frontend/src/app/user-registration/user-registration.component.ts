@@ -25,7 +25,6 @@ export class UserRegistrationComponent {
   onSubmit() {
     console.log(this.user);
     
-    // Basic validation: Check if all fields are filled
     if (
       this.user.firstName.trim() === '' || 
       this.user.lastName.trim() === '' || 
@@ -37,7 +36,6 @@ export class UserRegistrationComponent {
       return alert('Please enter all fields');
     }
   
-    // Password match validation
     if (this.user.password !== this.user.repeatPassword) {
       return alert('Passwords do not match');
     }
@@ -47,11 +45,15 @@ export class UserRegistrationComponent {
         alert('Registration successful');  
         console.log(data);
   
-        // Redirect to the /home page after successful registration
         this.router.navigate(['/home']);
       },
       (err) => {
-        console.error('Error during registration:', err);
+        if (err.status === 409) {
+          return alert('Username: This username already taken');
+        }
+        if (err.status === 500) {
+          return alert('Server error, please try again later');
+        }
         alert('An error occurred during registration, please try again.');
       }
     );

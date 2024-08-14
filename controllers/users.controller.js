@@ -21,13 +21,13 @@ const addUser = function (req, res) {
         }
 
         // Encrypt user password and add salt
-        bcrypt.genSalt(10, function (err, salt) {
-            if (err) {
-                return res.status(500).json({ error: err.message || "Internal server error" });
+        bcrypt.genSalt(10, function (error, salt) {
+            if (error) {
+                return res.status(500).json({ error: error.message || "Internal server error" });
             }
-            bcrypt.hash(user.password, salt, function (err, hash) {
-                if (err) {
-                    return res.status(500).json({ error: err.message || "Internal server error" });
+            bcrypt.hash(user.password, salt, function (error, hash) {
+                if (error) {
+                    return res.status(500).json({ error: error.message || "Internal server error" });
                 }
                 user.password = hash;
                 User.create(user, function (error, newUser) {
@@ -94,35 +94,88 @@ const deleteUserByName = function (req, res) {
 };
 
 // User login and JWT generation
-const login = function (req, res) {
-    const { username, password } = req.body;
+// const login = function (req, res) {
+//     const { username, password } = req.body;
 
-    User.findOne({ username }).exec(function (error, existingUser) {
+//     User.findOne({ username }).exec(function (error, existingUser) {
+//         if (error) {
+//             return res.status(500).json({ error: error.message || "Internal server error" });
+//         }
+//         if (!existingUser) {
+//             return res.status(404).json({ error: "User not found" });
+//         }
+
+//         bcrypt.compare(password, existingUser.password, function (error, isMatch) {
+//             if (error) {
+//                 return res.status(500).json({ error: "Unauthorized" });
+//             }
+//             if (!isMatch) {
+//                 return res.status(401).json({ error: "Unauthorized" });
+//             }
+
+//             const token = jwt.sign(
+//                 { userId: existingUser._id, username: existingUser.username },
+//                 SECRET_KEY,
+//                 { expiresIn: process.env.TOKEN_EXPIRATION_TIME } // Token expiration time
+//             );
+
+//             return res.status(200).json({ message: "Login successful", token, user: existingUser });
+//         });
+//     });
+// };
+// Promisified function for User.findOne
+const findUserByUsername = (username) => {
+    return new Promise((resolve, reject) => {
+      User.findOne({ username }).exec((error, user) => {
         if (error) {
-            return res.status(500).json({ error: error.message || "Internal server error" });
+          return reject(error);
         }
-        if (!existingUser) {
-            return res.status(404).json({ error: "User not found" });
-        }
-
-        bcrypt.compare(password, existingUser.password, function (err, isMatch) {
-            if (err) {
-                return res.status(500).json({ error: "Error during password comparison" });
-            }
-            if (!isMatch) {
-                return res.status(401).json({ error: "Invalid credentials" });
-            }
-
-            const token = jwt.sign(
-                { userId: existingUser._id, username: existingUser.username },
-                SECRET_KEY,
-                { expiresIn: process.env.TOKEN_EXPIRATION_TIME } // Token expiration time
-            );
-
-            return res.status(200).json({ message: "Login successful", token, user: existingUser });
-        });
+        resolve(user);
+      });
     });
-};
+  };
+  
+  // Promisified function for bcrypt.compare
+  const comparePasswords = (password, hashedPassword) => {
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, hashedPassword, (error, isMatch) => {
+        if (error) {
+          return reject(error);
+        }
+        resolve(isMatch);
+      });
+    });
+  };
+  
+  // Login function using the promisified functions
+  const login = (req, res) => {
+    const { username, password } = req.body;
+  
+    findUserByUsername(username)
+      .then(existingUser => {
+        if (!existingUser) {
+          return res.status(404).json({ error: "User not found" });
+        }
+  
+        return comparePasswords(password, existingUser.password)
+          .then(isMatch => {
+            if (!isMatch) {
+              return res.status(401).json({ error: "Unauthorized" });
+            }
+  
+            const token = jwt.sign(
+              { userId: existingUser._id, username: existingUser.username },
+              SECRET_KEY,
+              { expiresIn: process.env.TOKEN_EXPIRATION_TIME } // Token expiration time
+            );
+  
+            return res.status(200).json({ message: "Login successful", token, user: existingUser });
+          });
+      })
+      .catch(error => {
+        return res.status(500).json({ error: error.message || "Internal server error" });
+      });
+  };
 
 module.exports = {
     addUser,

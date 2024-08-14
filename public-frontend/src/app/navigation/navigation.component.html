@@ -1,11 +1,9 @@
 <!-- Navigation Section -->
 <nav class="nav-container">
-   <button routerLink="/about" class="nav-button">About</button>
-   <button routerLink="/paintings" class="nav-button">Paintings</button>
-   <button routerLink="/add-painting" class="nav-button">Add Painting</button>
-   <button routerLink="/add-user" class="nav-button">Signup</button>
-   <!-- once logedin change button to logout -->
-   <button routerLink="/login" class="nav-button" >Login</button>
-   
- </nav>
- 
+  <button routerLink="/about" class="nav-button">About</button>
+  <button routerLink="/paintings" class="nav-button">Paintings</button>
+  <button routerLink="/add-painting" class="nav-button" *ngIf="isLoggedIn()">Add Painting</button>
+  <button routerLink="/add-user" class="nav-button" *ngIf="!isLoggedIn()">Signup</button>
+  <button routerLink="/login" class="nav-button" *ngIf="!isLoggedIn()">Login</button>
+  <button (click)="logout()" class="nav-button" *ngIf="isLoggedIn()">Logout</button>
+</nav>

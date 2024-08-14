@@ -19,7 +19,6 @@ export class LoginComponent {
   }
   constructor(private userService: UserService, private router: Router) { }
   onSubmit() {
-    // Basic validation: Check if username and password are provided
     if (this.loginCredentials.username.trim() === '' || this.loginCredentials.password.trim() === '') {
       return alert('Please enter both username and password');
     }
@@ -39,11 +38,9 @@ export class LoginComponent {
         localStorage.setItem('token', data.token);
         alert('Login successful');
   
-        // Reroute to the /home page
         this.router.navigate(['/home']);
       },
       (err) => {
-        // Handle various error statuses
         if (err.status === 401) {
           return alert('Unauthorized: Invalid username or password');
         } else if (err.status === 500) {

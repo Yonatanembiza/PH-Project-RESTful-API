@@ -32,7 +32,12 @@ export class PaintingComponent implements OnInit {
         this.painting = data;
       },
       (err) => {
-        console.error('Error fetching painting:', err);
+        if (err.status === 404) {
+          return alert('Painting not found');
+        }
+        if (err.status === 401) {
+          return alert('Unauthorized: Invalid token');
+        }
         alert('An error occurred while fetching the painting.');
       }
     );
@@ -49,11 +54,16 @@ export class PaintingComponent implements OnInit {
       this.paintingService.deletePaintingById(id).subscribe(
         () => {
           alert('Painting with id ' + id + ' was deleted successfully');
-          this.router.navigate(['/home']); // Redirect to the /home page
+          this.router.navigate(['/home']);
         },
         (err) => {
-          console.error('Error deleting painting:', err);
-          alert('You are have no permission to delete this painting.');
+          if (err.status === 401) {
+            return alert('Unauthorized: Invalid token');
+          }
+          if (err.status === 404) {
+            return alert('Painting not found');
+          }
+          alert('You have no permission to delete this painting: Unauthorized.');
         }
       );
     }

@@ -9,10 +9,10 @@ const verifyToken = (req, res, next) => {
     
     const token = authHeader.split(' ')[1];
     
-    if (!token) {
+    if (!token || token === 'null' || token === 'undefined') {
         return res.status(401).json({ error: "Signup or login first to get access" });
     }
-
+    console.log("Did we get here?")
     verifyTokenPromise(token, process.env.SECRET_KEY)
         .then((decoded) => {
             req.userId = decoded.userId;

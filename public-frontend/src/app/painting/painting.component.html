@@ -10,7 +10,7 @@
         <strong>First Displayed:</strong> {{ painting.museum?.first_displayed?.name }} - {{ painting.museum?.first_displayed?.country }}
     </div>
     
-    <img src="{{ painting.image }}" class="painting-image" alt="Painting Image"><br>
+    <img src="{{ painting.image }}" class="painting-image" alt="Painting Image" loading="lazy"><br>
     
     <!-- Delete Button -->
     <button class="delete-button" (click)="deletePainting()">Delete</button>

@@ -52,12 +52,16 @@ export class PaintingRegistrationComponent {
           // Notify the user of success
           alert('Painting added successfully');
     
-          // Redirect to the /home page
           this.router.navigate(['/home']);
         },
         (err) => {
-          console.error('Error adding painting:', err);
-          alert('You are have no permission to add this painting.');
+          if (err.status === 401) {
+            return alert('Unauthorized: Invalid token');
+          }
+          if (err.status === 500) {
+            return alert('Server error, please try again later');
+          }
+          alert('You have no permission to add to the collection.');
         }
       );
     }
