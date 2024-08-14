@@ -19,6 +19,6 @@ export class NavigationComponent {
     // remove everything from local storage
     // localStorage.clear();
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 }
