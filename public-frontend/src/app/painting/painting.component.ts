@@ -53,7 +53,7 @@ export class PaintingComponent implements OnInit {
         },
         (err) => {
           console.error('Error deleting painting:', err);
-          alert('An error occurred while deleting the painting.');
+          alert('You are have no permission to delete this painting.');
         }
       );
     }

@@ -57,7 +57,7 @@ export class PaintingRegistrationComponent {
         },
         (err) => {
           console.error('Error adding painting:', err);
-          alert('An error occurred while adding the painting, please try again.');
+          alert('You are have no permission to add this painting.');
         }
       );
     }
