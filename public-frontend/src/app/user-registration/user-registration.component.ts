@@ -24,7 +24,6 @@ export class UserRegistrationComponent {
 
   onSubmit() {
     console.log(this.user);
-    
     if (
       this.user.firstName.trim() === '' || 
       this.user.lastName.trim() === '' || 
@@ -41,6 +40,17 @@ export class UserRegistrationComponent {
     }
   
     this.userService.registerUser(this.user).subscribe(
+      // {
+      //   next: (user) => {
+
+      //   }, 
+      //   error: () => {
+
+      //   },
+      //   complete: () => {
+
+      //   }
+      // }
       (data: any) => {
         alert('Registration successful');  
         console.log(data);

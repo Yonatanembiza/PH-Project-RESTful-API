@@ -6,9 +6,9 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class PaintingService {
-  private baseUrl = environment.apiUrl + '/paintings';
+  private _baseUrl = environment.apiUrl + '/paintings';
 
-  constructor(private http: HttpClient) { }
+  constructor(private _httpClient: HttpClient) { }
 
   private getHeaders() {
     const token = localStorage.getItem('token');
@@ -19,34 +19,34 @@ export class PaintingService {
     };
   }
   getPaintings() {
-    return this.http.get<any>(`${this.baseUrl}`);
+    return this._httpClient.get<any>(`${this._baseUrl}`);
   }
 
   getPaintingByName(name: string) {
-    return this.http.get<any>(`${this.baseUrl}/name/${name}`);
+    return this._httpClient.get<any>(`${this._baseUrl}/name/${name}`);
   }
   getPaintingById(id: number) {
-    return this.http.get<any>(`${this.baseUrl}/id/${id}`);
+    return this._httpClient.get<any>(`${this._baseUrl}/id/${id}`);
   }
 
   addPainting(painting: any) {
     console.log(painting);
-    return this.http.post<any>(`${this.baseUrl}`, painting, {headers: this.getHeaders().headers});
+    return this._httpClient.post<any>(`${this._baseUrl}`, painting, {headers: this.getHeaders().headers});
   }
   addMuseumByPaintingId(paintingId: number, museum: any) {
-    return this.http.post<any>(`${this.baseUrl}/id/${paintingId}/museum`, museum, {headers: this.getHeaders().headers});
+    return this._httpClient.post<any>(`${this._baseUrl}/id/${paintingId}/museum`, museum, {headers: this.getHeaders().headers});
   }
   deletePaintingById(id: number) {
-    return this.http.delete<any>(`${this.baseUrl}/id/${id}`, {headers: this.getHeaders().headers});
+    return this._httpClient.delete<any>(`${this._baseUrl}/id/${id}`, {headers: this.getHeaders().headers});
   }
   //
   deletePaintingByName(name: string) {
-    return this.http.delete<any>(`${this.baseUrl}/name/${name}`, {headers: this.getHeaders().headers});
+    return this._httpClient.delete<any>(`${this._baseUrl}/name/${name}`, {headers: this.getHeaders().headers});
   }
   updatePaintingById(id: number, painting: any) {
-    return this.http.put<any>(`${this.baseUrl}/id/${id}`, painting, {headers: this.getHeaders().headers});
+    return this._httpClient.put<any>(`${this._baseUrl}/id/${id}`, painting, {headers: this.getHeaders().headers});
   }
   updatePaintingByName(name: string, painting: any) {
-    return this.http.put<any>(`${this.baseUrl}/name/${name}`, painting, {headers: this.getHeaders().headers});
+    return this._httpClient.put<any>(`${this._baseUrl}/name/${name}`, painting, {headers: this.getHeaders().headers});
   }
 }

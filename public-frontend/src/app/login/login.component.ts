@@ -37,6 +37,9 @@ export class LoginComponent {
         // Successful login: store the token
         localStorage.setItem('token', data.token);
         alert('Login successful');
+        // clear the form
+        this.loginCredentials.username = '';
+        this.loginCredentials.password = '';
   
         this.router.navigate(['/home']);
       },

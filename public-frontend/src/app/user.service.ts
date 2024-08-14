@@ -8,20 +8,20 @@ import { environment } from '../environments/environment';
 })
 export class UserService {
 
-  private baseUrl = environment.apiUrl + '/users';
+  private _baseUrl = environment.apiUrl + '/users';
 
-  constructor(private http: HttpClient, private activeRoute: ActivatedRoute) { }
+  constructor(private _httpClient: HttpClient, private activeRoute: ActivatedRoute) { }
   registerUser(user: any) {
-    return this.http.post<any>(`${this.baseUrl}`, user);
+    return this._httpClient.post<any>(`${this._baseUrl}`, user);
   }
   login(userCredentials: any) {
     console.log(userCredentials);
-    return this.http.post<any>(`${this.baseUrl}/login`, userCredentials);
+    return this._httpClient.post<any>(`${this._baseUrl}/login`, userCredentials);
   }
   updateUser(user: any) {
-    return this.http.put<any>(`${this.baseUrl}/${user.username}`, user);
+    return this._httpClient.put<any>(`${this._baseUrl}/${user.username}`, user);
   }
   getUserByUsername(username: string) {
-    return this.http.get<any>(`${this.baseUrl}/${username}`);
+    return this._httpClient.get<any>(`${this._baseUrl}/${username}`);
   }
 }
