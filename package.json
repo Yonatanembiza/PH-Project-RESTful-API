@@ -8,11 +8,12 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^4.16.0",
     "mongoose": "^5.9.0",
-    "nodemon": "^3.1.4",
     "php-api": "file:"
   },
   "devDependencies": {
-    "mocha": "^10.7.0"
+    "concurrently": "^8.2.2",
+    "mocha": "^10.7.0",
+    "nodemon": "^3.1.4"
   },
   "name": "php-api",
   "version": "1.0.0",
@@ -20,7 +21,10 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha"
+    "test": "mocha",
+    "start:backend": "nodemon app.js",
+    "start:frontend": "cd public-frontend && ng serve",
+    "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
   },
   "repository": {
     "type": "git",
