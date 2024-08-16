@@ -48,4 +48,6 @@ Button Explanations
         Purpose: Logs the user out by removing the authentication token from local storage and redirects them to the login page.
         Display Condition: Visible only if the user is logged in (*ngIf="isLoggedIn()"). This allows authenticated users to log out of their account.
 
+For DB, you can use the included database (it has around 99 entries)
+
         
