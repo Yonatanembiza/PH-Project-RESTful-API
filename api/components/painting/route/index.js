@@ -9,6 +9,8 @@ const verifyToken = require("../../../security/verifyToken");
 router.route('/paintings')
     .post(verifyToken, paintingController.addPainting)
     .get(paintingController.getPaintings);
+router.route('/paintings/many')
+      .post(verifyToken, paintingController.addManyPaintings);
 
 router.route('/paintings/id/:id/museum')
     .post(verifyToken, paintingController.addMuseumByPaintingId);

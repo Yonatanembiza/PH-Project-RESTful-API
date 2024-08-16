@@ -45,6 +45,21 @@ function addPainting(req, res) {
         handleResponse(res, status, message);
     });
 }
+function addManyPaintings(req, res) {
+    const paintingArray = req.body;
+    let status = 200;
+    let message;
+    Painting.insertMany(paintingArray, function (error, docs) {
+        if (error) {
+            status = 500;
+            message = process.env.ERROR_INTERNAL;
+        } else {
+            status = 201;
+            message = process.env.SUCCESS_MESSAGE + ": Paintings created successfully";
+        }
+        handleResponse(res, status, message);
+    });
+}
 
 function addMuseumByPaintingId(req, res) {
     const paintingId = req.params.id;
@@ -98,6 +113,7 @@ function getPaintings(req, res) {
                 status = 200;
                 message = docs;
             }
+            console.log(message.length);
             handleResponse(res, status, message);
         });
 }
@@ -274,6 +290,7 @@ function deleteMuseumByPaintingName(req, res) {
 
 module.exports = {
     addPainting,
+    addManyPaintings,
     getPaintings,
     getPaintingById,
     getPaintingByName,
