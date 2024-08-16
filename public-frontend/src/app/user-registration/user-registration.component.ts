@@ -40,17 +40,7 @@ export class UserRegistrationComponent {
     }
   
     this.userService.registerUser(this.user).subscribe(
-      // {
-      //   next: (user) => {
-
-      //   }, 
-      //   error: () => {
-
-      //   },
-      //   complete: () => {
-
-      //   }
-      // }
+  
       (data: any) => {
         alert('Registration successful');  
         console.log(data);

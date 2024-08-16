@@ -1,27 +1,54 @@
+require("dotenv").config();
 const verifyTokenPromise = require('./verifyTokenPromise');
 
-const verifyToken = (req, res, next) => {
+const sendResponse = function (res, statusCode, message) {
+    res.status(statusCode).json({ error: message });
+};
+
+const isInvalidToken = function (token) {
+    return !token || token === 'null' || token === 'undefined' || token === 'expired';
+};
+const verifyToken = function (req, res, next) {
     const authHeader = req.headers['authorization'];
-    console.log(authHeader)
+    const errorMessage = "Signup or login first to get access";
+
+    // Initialize response object
+    const response = {
+        statusCode: 200,
+        message: ""
+    };
+
+    // Validate authorization header
     if (!authHeader) {
-        return res.status(401).json({ error: "Signup or login first to get access" });
+        response.statusCode = 401;
+        response.message = errorMessage;
+    } else {
+        const token = authHeader.split(' ')[1];
+        if (isInvalidToken(token)) {
+            response.statusCode = 401;
+            response.message = errorMessage;
+        } else {
+            verifyTokenPromise(token, process.env.SECRET_KEY)
+                .then(function (decoded) {
+                    req.userId = decoded.userId;
+                    next();
+                })
+                .catch(function (err) {
+                    if (err.name === 'TokenExpiredError') {
+                        response.statusCode = 401;
+                        response.message = errorMessage + " - " + process.env.ERROR_EXPIRED;
+                    } else {
+                        response.statusCode = 500;
+                        response.message = process.env.ERROR_INTERNAL;
+                    }
+                    if (response.statusCode !== 200) {
+                        sendResponse(res, response.statusCode, response.message);
+                    }
+                });
+            return;
+        }
     }
-    
-    const token = authHeader.split(' ')[1];
-    
-    if (!token || token === 'null' || token === 'undefined') {
-        return res.status(401).json({ error: "Signup or login first to get access" });
-    }
-    console.log("Did we get here?")
-    verifyTokenPromise(token, process.env.SECRET_KEY)
-        .then((decoded) => {
-            req.userId = decoded.userId;
-            next();
-        })
-        .catch((err) => {
-            console.error('Token verification error:', err);
-            res.status(500).json({ error: "Failed to authenticate token" });
-        });
+    sendResponse(res, response.statusCode, response.message);
 };
 
 module.exports = verifyToken;

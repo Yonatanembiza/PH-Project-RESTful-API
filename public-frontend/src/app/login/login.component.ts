@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,10 @@ export class LoginComponent {
     username: '',
     password: ''
   }
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService,
+     private _authService: AuthService, 
+     private router: Router
+    ) { }
   onSubmit() {
     if (this.loginCredentials.username.trim() === '' || this.loginCredentials.password.trim() === '') {
       return alert('Please enter both username and password');
@@ -35,8 +39,11 @@ export class LoginComponent {
         }
   
         // Successful login: store the token
-        localStorage.setItem('token', data.token);
-        alert('Login successful');
+        this._authService.storeToken(data.token);
+        // hello user - get name from data
+        // alert(`Hello ${data.user.firstName}` + ' ' + `${data.user.lastName}`);
+        // store the user in local storage
+        localStorage.setItem('user', data.user.firstName.toUpperCase() + ' ' + data.user.lastName.toUpperCase());
         // clear the form
         this.loginCredentials.username = '';
         this.loginCredentials.password = '';

@@ -13,6 +13,7 @@ import { PaintingService } from '../painting.service';
   styleUrl: './painting.component.css'
 })
 export class PaintingComponent implements OnInit {
+
   painting!: Painting;
 
   constructor(private activatedRoute: ActivatedRoute, 
@@ -58,12 +59,12 @@ export class PaintingComponent implements OnInit {
         },
         (err) => {
           if (err.status === 401) {
-            return alert('Unauthorized: Invalid token');
+            return alert('Unauthorized');
           }
           if (err.status === 404) {
             return alert('Painting not found');
           }
-          alert('You have no permission to delete this painting: Unauthorized.');
+          alert('Internal server error.');
         }
       );
     }

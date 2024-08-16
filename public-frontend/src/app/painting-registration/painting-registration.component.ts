@@ -47,7 +47,7 @@ export class PaintingRegistrationComponent {
     
       this.paintingService.addPainting(this.painting).subscribe(
         (data: Painting) => {
-          console.log(`${data.name} was added successfully`);
+          console.log(`Painting was added successfully`);
     
           // Notify the user of success
           alert('Painting added successfully');
@@ -60,6 +60,9 @@ export class PaintingRegistrationComponent {
           }
           if (err.status === 500) {
             return alert('Server error, please try again later');
+          }
+          if (err.status === 409) {
+            return alert('Painting already exists');
           }
           alert('You have no permission to add to the collection.');
         }

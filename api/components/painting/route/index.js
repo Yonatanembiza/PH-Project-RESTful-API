@@ -1,10 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const router = express.Router();
-const paintingController = require("../controllers/paintings.controller");
-const userController = require("../controllers/users.controller");
+const paintingController = require("../controller/paintings.controller");
 
-const verifyToken = require("../api/security/verifyToken");
+const verifyToken = require("../../../security/verifyToken");
 
 // Routes for paintings
 router.route('/paintings')
@@ -42,18 +41,5 @@ router.route('/paintings/id/:id/museum')
 
 router.route('/paintings/name/:name/museum')
     .delete(verifyToken, paintingController.deleteMuseumByPaintingName);
-
-// Routes for users
-router.route('/users')
-    .post(userController.addUser)
-    .get(verifyToken, userController.getUsers);
-
-router.route('/users/username/:username')
-    .get(verifyToken, userController.getUserByName)
-    .delete(verifyToken, userController.deleteUserByName)
-    .put(verifyToken, userController.updateUserByUsername);
-
-router.route('/users/login')
-    .post(userController.login);
 
 module.exports = router;
