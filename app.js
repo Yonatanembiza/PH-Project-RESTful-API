@@ -7,10 +7,9 @@ const path= require("path");
 const express= require("express");
 
 const app= express();
-
+app.use(cors());
 // parse json data
 app.use(express.json()); 
-app.use(cors());
 // logging
 app.use(function(req, res, next){
     console.log(req.method, req.url);
