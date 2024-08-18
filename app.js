@@ -1,8 +1,8 @@
 require("dotenv").config();
-require("./api/database/db");
+require("./backend/database/db");
 const cors= require("cors");
-const routesUsers= require("./api/components/user/route/index");
-const routesPaintings= require("./api/components/painting/route/index");
+const routesUsers= require("./backend/components/user/route/index");
+const routesPaintings= require("./backend/components/painting/route/index");
 const path= require("path");
 const express= require("express");
 
